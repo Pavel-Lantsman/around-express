@@ -15,7 +15,7 @@ const getFileData = (filePath, res) => fsPromises
 
 // Get All Users
 const getUsers = (req, res) => {
-  getFileData(usersData)
+  getFileData(usersData, res)
     .then((users) => {
       res.status(200).send(users);
     });
@@ -23,7 +23,7 @@ const getUsers = (req, res) => {
 
 // Get User By ID
 const getSingleUser = (req, res) => {
-  getFileData(usersData)
+  getFileData(usersData, res)
     .then((users) => {
       const user = users.find((userInfo) => userInfo._id === req.params.id);
       if (user) {

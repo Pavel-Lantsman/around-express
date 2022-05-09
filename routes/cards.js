@@ -14,7 +14,7 @@ const getFileData = (filePath, res) => fsPromises
   });
 
 // Get All Cards
-const getCards = (req, res) => getFileData(cardsData)
+const getCards = (req, res) => getFileData(cardsData, res)
   .then((cards) => {
     res.status(200).send(cards);
   });
