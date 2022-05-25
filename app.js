@@ -7,7 +7,7 @@ const notFoundRouter = require('./routes/notFound');
 
 const app = express();
 
- mongoose.connect('mongodb://localhost:27017/aroundb')
+mongoose.connect('mongodb://localhost:27017/aroundb');
 
 const { PORT = 3000 } = process.env;
 
@@ -17,7 +17,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use((req, res, next) => {
   req.user = {
-    _id: "628c868947dedaceb632d3e1"
+    _id: '628c868947dedaceb632d3e1',
   };
 
   next();
@@ -28,5 +28,5 @@ app.use('/', cardsRouter);
 app.use('/', notFoundRouter);
 
 app.listen(PORT, () => {
-  console.log(`App listening at port ${PORT}`)});
-
+  console.log(`App listening at port ${PORT}`);
+});

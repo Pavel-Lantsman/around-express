@@ -1,9 +1,7 @@
 const Card = require('../models/cardModel');
 const {
-  NOT_FOUND,
-  INVALID_DATA,
-  DEFAULT_ERROR,
   createNotFoundError,
+  errorHandler,
 } = require('../utils/errors');
 
 // Get all cards data
@@ -13,13 +11,7 @@ const getAllCards = (req, res) => {
     .then((cardsData) => {
       res.status(200).send(cardsData);
     })
-    .catch((err) => {
-      if (err.name === 'Not Found') {
-        res.status(NOT_FOUND).send({ message: err.message });
-        return;
-      }
-      res.status(DEFAULT_ERROR).send({ message: err.message });
-    });
+    .catch(errorHandler);
 };
 
 // Create a new card
@@ -29,13 +21,7 @@ const createCard = (req, res) => {
     .then(() => {
       res.status(200).send({ message: 'card created successfully' });
     })
-    .catch((err) => {
-      if (err.name === 'ValidationError') {
-        res.status(INVALID_DATA).send({ message: err.message });
-        return;
-      }
-      res.status(DEFAULT_ERROR).send({ message: err.message });
-    });
+    .catch(errorHandler);
 };
 
 // Delete card
@@ -46,16 +32,7 @@ const deleteCard = (req, res) => {
     .then(() => {
       res.status(200).send('card has been deleted successfully');
     })
-    .catch((err) => {
-      if (err.name === 'CastError') {
-        res.status(INVALID_DATA).send({ message: err.message });
-      }
-      if (err.name === 'Not Found') {
-        res.status(NOT_FOUND).send({ message: err.message });
-        return;
-      }
-      res.status(DEFAULT_ERROR).send({ message: err.message });
-    });
+    .catch(errorHandler);
 };
 
 // Like card
@@ -69,16 +46,7 @@ const likeCard = (req, res) => {
     .then((card) => {
       res.status(200).send(card.likes);
     })
-    .catch((err) => {
-      if (err.name === 'CastError') {
-        res.status(INVALID_DATA).send({ message: err.message });
-        return;
-      } if (err.name === 'Not Found') {
-        res.status(NOT_FOUND).send({ message: err.message });
-        return;
-      }
-      res.status(DEFAULT_ERROR).send({ message: err.message });
-    });
+    .catch(errorHandler);
 };
 
 // Dislike card
@@ -92,16 +60,7 @@ const dislikeCard = (req, res) => {
     .then((card) => {
       res.status(200).send(card.likes);
     })
-    .catch((err) => {
-      if (err.name === 'CastError') {
-        res.status(INVALID_DATA).send({ message: err.message });
-        return;
-      } if (err.name === 'Not Found') {
-        res.status(NOT_FOUND).send({ message: err.message });
-        return;
-      }
-      res.status(DEFAULT_ERROR).send({ message: err.message });
-    });
+    .catch(errorHandler);
 };
 
 module.exports = {
@@ -109,5 +68,5 @@ module.exports = {
   createCard,
   deleteCard,
   likeCard,
-  dislikeCard
-}
+  dislikeCard,
+};

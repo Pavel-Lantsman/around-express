@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const avatarRegex = /^https?:\/\/(www\.)?[A-Za-z\d-.]+\.[A-Za-z\d-.]+[A-Za-z\d-._~:?%#@!$&'()*+,;=\/\[\]]*$/i;
+const avatarRegex = /^https?:\/\/(www\.)?[A-Za-z\d-.]+\.[A-Za-z\d-.]+[A-Za-z\d-._~:?%#@!$&'()*+,;=/[\]]*$/i;
 
 const userSchema = new mongoose.Schema({
   name: {

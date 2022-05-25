@@ -1,9 +1,7 @@
 const User = require('../models/userModel');
 const {
-  NOT_FOUND,
-  INVALID_DATA,
-  DEFAULT_ERROR,
   createNotFoundError,
+  errorHandler,
 } = require('../utils/errors');
 
 // Get full users list
@@ -11,29 +9,15 @@ const getAllUsers = (req, res) => {
   User.find({})
     .orFail(createNotFoundError)
     .then((usersData) => res.status(200).send(usersData))
-    .catch((err) => {
-      if (err.name === 'Not Found') {
-        res.status(NOT_FOUND).send({ message: err.message });
-        return;
-      }
-      res.status(DEFAULT_ERROR).send({ message: err.message });
-    });
+    .catch(errorHandler);
 };
 
 // Get user by ID
 const getUserById = (req, res) => {
   User.findById(req.params.id)
     .orFail(createNotFoundError)
-    .then((User) => res.status(200).send(User))
-    .catch((err) => {
-      if (err.name === 'CastError') {
-        res.status(INVALID_DATA).send({ message: err.message });
-        return;
-      } if (err.name === 'Not Found') {
-        res.status(NOT_FOUND).send({ message: err.message });
-      }
-      res.status(DEFAULT_ERROR).send({ message: err.message });
-    });
+    .then((user) => res.status(200).send(user))
+    .catch(errorHandler);
 };
 
 // Create a new user
@@ -43,13 +27,7 @@ const createUser = (req, res) => {
     .then(() => {
       res.status(200).send({ message: 'user created successfully' });
     })
-    .catch((err) => {
-      if (err.name === 'ValidationError') {
-        res.status(INVALID_DATA).send({ message: err.message });
-        return;
-      }
-      res.status(DEFAULT_ERROR).send({ message: err.message });
-    });
+    .catch(errorHandler);
 };
 
 const updateUser = (req, res) => {
@@ -60,13 +38,7 @@ const updateUser = (req, res) => {
     .then((updatedUser) => {
       res.status(200).send({ message: `User ${updatedUser} updated successfully` });
     })
-    .catch((err) => {
-      if (err.name === 'Not Found') {
-        res.status(NOT_FOUND).send({ message: err.message });
-        return;
-      }
-      res.status(DEFAULT_ERROR).send({ message: err.message });
-    });
+    .catch(errorHandler);
 };
 
 const updateAvatar = (req, res) => {
@@ -77,13 +49,7 @@ const updateAvatar = (req, res) => {
     .then(() => {
       res.status(200).send({ message: 'Avatar updated successfully' });
     })
-    .catch((err) => {
-      if (err.name === 'Not Found') {
-        res.status(NOT_FOUND).send({ message: err.message });
-        return;
-      }
-      res.status(DEFAULT_ERROR).send({ message: err.message });
-    });
+    .catch(errorHandler);
 };
 
 module.exports = {
@@ -91,5 +57,5 @@ module.exports = {
   getUserById,
   createUser,
   updateUser,
-  updateAvatar
-}
+  updateAvatar,
+};

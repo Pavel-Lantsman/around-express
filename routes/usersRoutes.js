@@ -21,6 +21,6 @@ router.post('/users', createUser);
 router.patch('/users/me', updateUser);
 
 // Update avatar
-router.patch('/users/me/avatar',  updateAvatar);
+router.patch('/users/me/avatar', updateAvatar);
 
 module.exports = router;
